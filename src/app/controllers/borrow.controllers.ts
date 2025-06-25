@@ -12,8 +12,11 @@ borrowRoutes.post("/", async (req: Request, res: Response) => {
       message: "Book borrowed successfully",
       data: result,
     });
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
   }
 });
 

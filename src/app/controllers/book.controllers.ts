@@ -2,15 +2,17 @@ import express, { Request, Response } from "express";
 
 import { IBook } from "../interfaces/book.interface";
 import { Book } from "../models/book.model";
+import {
+  bookValidationSchema,
+  updateBookValidationSchema,
+} from "../zodValidation/book.zodValidation";
 
 export const bookRoutes = express.Router();
 
 bookRoutes.post("/", async (req: Request, res: Response) => {
   try {
-    const book = req.body;
-
+    const book = await bookValidationSchema.parseAsync(req.body);
     const result = await Book.create(book);
-    console.log(result);
     res.status(200).json({
       success: true,
       message: "Book created successfully",
@@ -89,7 +91,7 @@ bookRoutes.get("/:bookId", async (req: Request, res: Response) => {
 });
 bookRoutes.put("/:bookId", async (req: Request, res: Response) => {
   try {
-    const book = req.body;
+    const book = await updateBookValidationSchema.parseAsync(req.body);
     const bookId = req.params.bookId;
     const result = await Book.findByIdAndUpdate(bookId, book, { upsert: true });
     res.status(200).json({
