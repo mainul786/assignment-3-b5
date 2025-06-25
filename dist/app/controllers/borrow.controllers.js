@@ -27,7 +27,10 @@ exports.borrowRoutes.post("/", (req, res) => __awaiter(void 0, void 0, void 0, f
         });
     }
     catch (error) {
-        console.log(error);
+        res.status(400).json({
+            success: false,
+            message: error.message,
+        });
     }
 }));
 exports.borrowRoutes.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

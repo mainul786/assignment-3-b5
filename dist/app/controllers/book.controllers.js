@@ -15,12 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.bookRoutes = void 0;
 const express_1 = __importDefault(require("express"));
 const book_model_1 = require("../models/book.model");
+const book_zodValidation_1 = require("../zodValidation/book.zodValidation");
 exports.bookRoutes = express_1.default.Router();
 exports.bookRoutes.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const book = req.body;
+        const book = yield book_zodValidation_1.bookValidationSchema.parseAsync(req.body);
         const result = yield book_model_1.Book.create(book);
-        console.log(result);
         res.status(200).json({
             success: true,
             message: "Book created successfully",
@@ -89,7 +89,7 @@ exports.bookRoutes.get("/:bookId", (req, res) => __awaiter(void 0, void 0, void 
 }));
 exports.bookRoutes.put("/:bookId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const book = req.body;
+        const book = yield book_zodValidation_1.updateBookValidationSchema.parseAsync(req.body);
         const bookId = req.params.bookId;
         const result = yield book_model_1.Book.findByIdAndUpdate(bookId, book, { upsert: true });
         res.status(200).json({

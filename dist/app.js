@@ -10,15 +10,16 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use("/api/books", book_controllers_1.bookRoutes);
 app.use("/api/borrow", borrow_controllers_1.borrowRoutes);
-// app.get("/", (req: Request, res: Response) => {
-//   res.send("Hello World!");
-// });
+app.get("/", (req, res) => {
+    res.send("Hello World!");
+});
 app.get("/test-error", (req, res) => {
     throw new Error(" through generic error");
 });
 // route not found handling
-app.use((req, res, next) => {
+app.use("*", (req, res, next) => {
     res.status(404).json({
+        success: false,
         message: "Route Not Found",
     });
 });
