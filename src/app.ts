@@ -7,9 +7,9 @@ app.use(express.json());
 app.use("/api/books", bookRoutes);
 app.use("/api/borrow", borrowRoutes);
 
-// app.get("/", (req: Request, res: Response) => {
-//   res.send("Hello World!");
-// });
+app.get("/", (req: Request, res: Response) => {
+  res.send("Hello World!");
+});
 app.get("/test-error", (req: Request, res: Response) => {
   throw new Error(" through generic error");
 });
