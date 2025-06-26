@@ -14,7 +14,7 @@ app.get("/test-error", (req: Request, res: Response) => {
   throw new Error(" through generic error");
 });
 // route not found handling
-app.use("*", (req: Request, res: Response, next: NextFunction) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(404).json({
     success: false,
     message: "Route Not Found",
