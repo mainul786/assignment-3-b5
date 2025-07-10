@@ -20,6 +20,22 @@ borrowRoutes.post("/", async (req: Request, res: Response) => {
   }
 });
 
+borrowRoutes.get("/all", async (req: Request, res: Response) => {
+  try {
+    const result = await Borrow.find();
+    res.status(200).json({
+      success: true,
+      message: "All Book borrowed successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 borrowRoutes.get("/", async (req: Request, res: Response) => {
   try {
     const borrows = await Borrow.aggregate([
@@ -38,7 +54,7 @@ borrowRoutes.get("/", async (req: Request, res: Response) => {
       {
         $group: {
           _id: "$bookDetails._id",
-          totalQauntity: { $sum: "$quantity" },
+          totalQuantity: { $sum: "$quantity" },
           title: { $first: "$bookDetails.title" },
           isbn: { $first: "$bookDetails.isbn" },
         },
@@ -49,7 +65,7 @@ borrowRoutes.get("/", async (req: Request, res: Response) => {
             title: "$title",
             isbn: "$isbn",
           },
-          totalQauntity: 1,
+          totalQuantity: 1,
         },
       },
     ]);

@@ -93,7 +93,7 @@ bookRoutes.put("/:bookId", async (req: Request, res: Response) => {
   try {
     const book = await updateBookValidationSchema.parseAsync(req.body);
     const bookId = req.params.bookId;
-    const result = await Book.findByIdAndUpdate(bookId, book, { upsert: true });
+    const result = await Book.findByIdAndUpdate(bookId, book, { new: true });
     res.status(200).json({
       success: true,
       message: "Book updated successfully",
