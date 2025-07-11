@@ -6,7 +6,7 @@ const app: Application = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://library-managment-client-opal.vercel.app/"],
+    origin: ["https://library-managment-client-six.vercel.app/"],
   })
 );
 
