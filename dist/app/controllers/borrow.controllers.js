@@ -33,6 +33,22 @@ exports.borrowRoutes.post("/", (req, res) => __awaiter(void 0, void 0, void 0, f
         });
     }
 }));
+exports.borrowRoutes.get("/all", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield borrow_model_1.Borrow.find();
+        res.status(200).json({
+            success: true,
+            message: "All Book borrowed successfully",
+            data: result,
+        });
+    }
+    catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error.message,
+        });
+    }
+}));
 exports.borrowRoutes.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const borrows = yield borrow_model_1.Borrow.aggregate([
@@ -50,7 +66,7 @@ exports.borrowRoutes.get("/", (req, res) => __awaiter(void 0, void 0, void 0, fu
             {
                 $group: {
                     _id: "$bookDetails._id",
-                    totalQauntity: { $sum: "$quantity" },
+                    totalQuantity: { $sum: "$quantity" },
                     title: { $first: "$bookDetails.title" },
                     isbn: { $first: "$bookDetails.isbn" },
                 },
@@ -61,7 +77,7 @@ exports.borrowRoutes.get("/", (req, res) => __awaiter(void 0, void 0, void 0, fu
                         title: "$title",
                         isbn: "$isbn",
                     },
-                    totalQauntity: 1,
+                    totalQuantity: 1,
                 },
             },
         ]);

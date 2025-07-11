@@ -91,7 +91,7 @@ exports.bookRoutes.put("/:bookId", (req, res) => __awaiter(void 0, void 0, void 
     try {
         const book = yield book_zodValidation_1.updateBookValidationSchema.parseAsync(req.body);
         const bookId = req.params.bookId;
-        const result = yield book_model_1.Book.findByIdAndUpdate(bookId, book, { upsert: true });
+        const result = yield book_model_1.Book.findByIdAndUpdate(bookId, book, { new: true });
         res.status(200).json({
             success: true,
             message: "Book updated successfully",
