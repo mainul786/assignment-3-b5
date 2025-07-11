@@ -9,9 +9,7 @@ const borrow_controllers_1 = require("./app/controllers/borrow.controllers");
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({
-    origin: ["https://library-managment-client-opal.vercel.app/"],
-}));
+app.use((0, cors_1.default)());
 app.use("/api/books", book_controllers_1.bookRoutes);
 app.use("/api/borrow", borrow_controllers_1.borrowRoutes);
 app.get("/", (req, res) => {
