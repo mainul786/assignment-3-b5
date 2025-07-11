@@ -4,7 +4,11 @@ import { borrowRoutes } from "./app/controllers/borrow.controllers";
 import cors from "cors";
 const app: Application = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://library-managment-client-opal.vercel.app/"],
+  })
+);
 
 app.use("/api/books", bookRoutes);
 app.use("/api/borrow", borrowRoutes);
